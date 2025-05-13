@@ -2,7 +2,7 @@ from util.rlkit_utils import simulate_policy
 from util.arguments import add_rollout_args, parser
 import robosuite as suite
 from robosuite.wrappers import GymWrapper
-from robosuite.controllers import ALL_CONTROLLERS, load_controller_config
+# from robosuite.controllers import ALL_CONTROLLERS, load_controller_config
 import numpy as np
 import torch
 import imageio
@@ -72,11 +72,15 @@ if __name__ == "__main__":
 
     # Pop the controller
     controller = env_args.pop("controller")
-    if controller in ALL_CONTROLLERS:
-        controller_config = load_controller_config(default_controller=controller)
-    else:
-        controller_config = load_controller_config(custom_fpath=controller)
+    # if controller in ALL_CONTROLLERS:
+    #     controller_config = load_controller_config(default_controller=controller)
+    # else:
+    #     controller_config = load_controller_config(custom_fpath=controller)
+    # print(controller_config)
+    # breakpoint()
+    controller_config = {'type': 'BASIC', 'body_parts': {'right': {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'input_type': 'delta', 'input_ref_frame': 'base', 'interpolation': None, 'ramp_ratio': 0.2, 'gripper': {'type': 'GRIP'}}, 'left': {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'input_type': 'delta', 'input_ref_frame': 'base', 'interpolation': None, 'ramp_ratio': 0.2, 'gripper': {'type': 'GRIP'}}, 'torso': {'type': 'JOINT_POSITION', 'input_max': 1, 'input_min': -1, 'output_max': 0.5, 'output_min': -0.5, 'kd': 200, 'kv': 200, 'kp': 1000, 'velocity_limits': [-1, 1], 'kp_limits': [0, 1000], 'interpolation': None, 'ramp_ratio': 0.2}, 'head': {'type': 'JOINT_POSITION', 'input_max': 1, 'input_min': -1, 'output_max': 0.5, 'output_min': -0.5, 'kd': 200, 'kv': 200, 'kp': 1000, 'velocity_limits': [-1, 1], 'kp_limits': [0, 1000], 'interpolation': None, 'ramp_ratio': 0.2}, 'base': {'type': 'JOINT_VELOCITY', 'interpolation': 'null'}, 'legs': {'type': 'JOINT_POSITION', 'input_max': 1, 'input_min': -1, 'output_max': 0.5, 'output_min': -0.5, 'kd': 200, 'kv': 200, 'kp': 1000, 'velocity_limits': [-1, 1], 'kp_limits': [0, 1000], 'interpolation': None, 'ramp_ratio': 0.2}}}
 
+    #{'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'control_delta': True, 'interpolation': None, 'ramp_ratio': 0.2}
     # Create env
     env_suite = suite.make(**env_args,
                            controller_configs=controller_config,

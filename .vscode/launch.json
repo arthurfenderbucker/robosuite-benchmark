@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Rollout Script",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder}/scripts/rollout.py",
+            "args": [
+                "--load_dir",
+                "runs/Door-Panda-OSC-POSE-SEED17/Door_Panda_OSC_POSE_SEED17_2020_09_13_00_26_44_0000--s-0/",
+                "--horizon",
+                "200",
+                "--camera",
+                "frontview"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}

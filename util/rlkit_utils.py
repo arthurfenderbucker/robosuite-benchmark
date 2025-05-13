@@ -19,7 +19,7 @@ from rlkit.core import logger
 import robosuite as suite
 from robosuite.wrappers import GymWrapper
 
-from robosuite.controllers import load_controller_config, ALL_CONTROLLERS
+# from robosuite.controllers import load_controller_config, ALL_CONTROLLERS
 
 import numpy as np
 
@@ -39,13 +39,15 @@ def experiment(variant, agent="SAC"):
     for env_config in (variant["expl_environment_kwargs"], variant["eval_environment_kwargs"]):
         # Load controller
         controller = env_config.pop("controller")
-        if controller in set(ALL_CONTROLLERS):
-            # This is a default controller
-            controller_config = load_controller_config(default_controller=controller)
-        else:
-            # This is a string to the custom controller
-            controller_config = load_controller_config(custom_fpath=controller)
+        # if controller in set(ALL_CONTROLLERS):
+        #     # This is a default controller
+        #     controller_config = load_controller_config(default_controller=controller)
+        # else:
+        #     # This is a string to the custom controller
+        #     controller_config = load_controller_config(custom_fpath=controller)
         # Create robosuite env and append to our list
+        controller_config = {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'control_delta': True, 'interpolation': None, 'ramp_ratio': 0.2}
+
         suites.append(suite.make(**env_config,
                                  has_renderer=False,
                                  has_offscreen_renderer=False,
@@ -175,15 +177,17 @@ def evaluate_policy(env_config, model_path, n_eval, printout=False):
         print("Policy loaded")
 
     # Load controller
-    controller = env_config.pop("controller")
-    if controller in set(ALL_CONTROLLERS):
-        # This is a default controller
-        controller_config = load_controller_config(default_controller=controller)
-    else:
-        # This is a string to the custom controller
-        controller_config = load_controller_config(custom_fpath=controller)
+    # controller = env_config.pop("controller")
+    # if controller in set(ALL_CONTROLLERS):
+    #     # This is a default controller
+    #     controller_config = load_controller_config(default_controller=controller)
+    # else:
+    #     # This is a string to the custom controller
+    #     controller_config = load_controller_config(custom_fpath=controller)
 
     # Create robosuite env
+    controller_config = {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'control_delta': True, 'interpolation': None, 'ramp_ratio': 0.2}
+
     env = suite.make(**env_config,
                      has_renderer=False,
                      has_offscreen_renderer=False,
@@ -235,7 +239,7 @@ def simulate_policy(
 
     # Load trained model and corresponding policy
     map_location = torch.device("cuda") if use_gpu else torch.device("cpu")
-    data = torch.load(model_path, map_location=map_location)
+    data = torch.load(model_path, map_location=map_location, weights_only=False)
     policy = data['evaluation/policy']
 
     if printout:

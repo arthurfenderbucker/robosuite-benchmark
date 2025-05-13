@@ -412,7 +412,7 @@ def rollout(
     terminals = []
     agent_infos = []
     env_infos = []
-    o = env.reset()
+    o = env.reset()[0]
     agent.reset()
     next_o = None
     path_length = 0
@@ -422,8 +422,8 @@ def rollout(
         env.render(**render_kwargs)
 
     while path_length < max_path_length:
-        a, agent_info = agent.get_action(o)
-        next_o, r, d, env_info = env.step(a)
+        a, agent_info = agent.get_action(o[:46])
+        next_o, r, d, env_info, _ = env.step(a)
         observations.append(o)
         rewards.append(r)
         terminals.append(d)
