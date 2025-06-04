@@ -1,4 +1,4 @@
-from util.rlkit_custom import rollout
+from robosuite_benchmark.util.rlkit_custom import rollout
 
 from rlkit.torch.pytorch_util import set_gpu_mode
 
@@ -13,7 +13,7 @@ from rlkit.torch.td3.td3 import TD3Trainer
 from rlkit.torch.networks import FlattenMlp, TanhMlpPolicy
 from rlkit.exploration_strategies.base import PolicyWrappedWithExplorationStrategy
 from rlkit.exploration_strategies.gaussian_strategy import GaussianStrategy
-from util.rlkit_custom import CustomTorchBatchRLAlgorithm
+from robosuite_benchmark.util.rlkit_custom import CustomTorchBatchRLAlgorithm
 
 from rlkit.core import logger
 import robosuite as suite
@@ -46,7 +46,7 @@ def experiment(variant, agent="SAC"):
         #     # This is a string to the custom controller
         #     controller_config = load_controller_config(custom_fpath=controller)
         # Create robosuite env and append to our list
-        controller_config = {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'control_delta': True, 'interpolation': None, 'ramp_ratio': 0.2}
+        # controller_config = {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'control_delta': True, 'interpolation': None, 'ramp_ratio': 0.2}
 
         suites.append(suite.make(**env_config,
                                  has_renderer=False,
@@ -54,7 +54,7 @@ def experiment(variant, agent="SAC"):
                                  use_object_obs=True,
                                  use_camera_obs=False,
                                  reward_shaping=True,
-                                 controller_configs=controller_config,
+                                #  controller_configs=controller_config,
                                  ))
     # Create gym-compatible envs
     expl_env = NormalizedBoxEnv(GymWrapper(suites[0]))
@@ -186,7 +186,7 @@ def evaluate_policy(env_config, model_path, n_eval, printout=False):
     #     controller_config = load_controller_config(custom_fpath=controller)
 
     # Create robosuite env
-    controller_config = {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'control_delta': True, 'interpolation': None, 'ramp_ratio': 0.2}
+    # controller_config = {'type': 'OSC_POSE', 'input_max': 1, 'input_min': -1, 'output_max': [0.05, 0.05, 0.05, 0.5, 0.5, 0.5], 'output_min': [-0.05, -0.05, -0.05, -0.5, -0.5, -0.5], 'kp': 150, 'damping_ratio': 1, 'impedance_mode': 'fixed', 'kp_limits': [0, 300], 'damping_ratio_limits': [0, 10], 'position_limits': None, 'orientation_limits': None, 'uncouple_pos_ori': True, 'control_delta': True, 'interpolation': None, 'ramp_ratio': 0.2}
 
     env = suite.make(**env_config,
                      has_renderer=False,
@@ -194,7 +194,7 @@ def evaluate_policy(env_config, model_path, n_eval, printout=False):
                      use_object_obs=True,
                      use_camera_obs=False,
                      reward_shaping=True,
-                     controller_configs=controller_config
+                    #  controller_configs=controller_config
                      )
     env = GymWrapper(env)
 

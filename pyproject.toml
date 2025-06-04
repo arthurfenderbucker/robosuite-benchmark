@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "robosuite-benchmark"
+version = "0.1.0"
+description = "Benchmarking suite for robosuite v1.5 using RLkit."
+authors = [
+    { name = "ARISE Initiative" },
+]
+license = { file = "rlkit/LICENSE" }
+readme = "README.md"
+dependencies = [
+]
+
+[tool.setuptools]
+include-package-data = true

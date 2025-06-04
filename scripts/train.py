@@ -7,8 +7,8 @@ import torch
 import rlkit.torch.pytorch_util as ptu
 from rlkit.launchers.launcher_util import setup_logger
 
-from util.rlkit_utils import experiment
-from util.arguments import *
+from robosuite_benchmark.util.rlkit_utils import experiment
+from robosuite_benchmark.util.arguments import *
 
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 

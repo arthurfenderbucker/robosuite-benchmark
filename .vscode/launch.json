@@ -9,11 +9,26 @@
             "program": "${workspaceFolder}/scripts/rollout.py",
             "args": [
                 "--load_dir",
-                "runs/Door-Panda-OSC-POSE-SEED17/Door_Panda_OSC_POSE_SEED17_2020_09_13_00_26_44_0000--s-0/",
+                // "runs/Door-Panda-OSC-POSE-SEED17/Door_Panda_OSC_POSE_SEED17_2020_09_13_00_26_44_0000--s-0/",
+                // "runs/Lift-Panda-OSC-POSE-SEED129/Lift_Panda_OSC_POSE_SEED129_2020_09_21_20_07_30_0000--s-0",
+                "log/runs/Lift-Panda-OSC-POSE-SEED1/test/",
                 "--horizon",
                 "200",
                 "--camera",
                 "frontview"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Train Script",
+            "type": "python",
+            "request": "launch",
+            "justMyCode": false,
+            "program": "${workspaceFolder}/scripts/train.py",
+            "args": [
+                "--variant",
+                // "runs/Door-Panda-OSC-POSE-SEED17/Door_Panda_OSC_POSE_SEED17_2020_09_13_00_26_44_0000--s-0/",
+                "runs/TRAINING_Lift-Panda-OSC-POSE-SEED17/Lift_Panda_OSC_POSE_SEED17_2020_09_13_00_26_56_0000--s-0/variant.json",
             ],
             "console": "integratedTerminal"
         }

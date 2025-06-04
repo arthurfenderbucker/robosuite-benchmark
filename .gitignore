@@ -111,3 +111,5 @@ mjkey.txt
 .idea
 
 .pytest_cache/
+
+log/*
